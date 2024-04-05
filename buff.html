@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buffalo Rate Chart</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('buff.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333; 
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 50%;
+            max-width: 600px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .table-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 50%;
+            max-width: 600px;
+        }
+
+        .table-container table {
+            margin-top: 10px;
+        }
+.navbar {
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="myctrl">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <a class="nav-link active" aria-current="page" href="frame3.html">Back</a>
+    </nav>
+
+    <h1>Add Buffalo Rate Chart</h1>
+
+    <form>
+        <table>
+            <tr>
+                <td>Enter Fat</td>
+                <td><input type="number" ng-model="fat" name="fat" ng-change="calculateRate()"></td>
+            </tr>
+            <tr>
+                <td>Rate</td>
+                <td>{{rate}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="Insert" ng-click="isShow('show')">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div class="container" ng-show="showval">
+        <div class="table-container">
+            <h2>Buffalo Fat & Rate Chart Detail</h2>
+            <table>
+                <tr>
+                    <th>Fat</th>
+                    <th>Rate</th>
+                </tr>
+                <tr>
+                    <td>{{fat}}</td>
+                    <td>{{rate}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myctrl", function($scope) {
+            $scope.showval = false;
+            $scope.calculateRate = function() {
+                if ($scope.fat <= 3.5) {
+                    $scope.rate = 50;
+                } else if ($scope.fat > 3.5 && $scope.fat <= 4.0) {
+                    $scope.rate = 55;
+                } else if ($scope.fat > 4.0 && $scope.fat <= 4.5) {
+                    $scope.rate = 60;
+                } else {
+                    $scope.rate = 65;
+                }
+            };
+            $scope.isShow = function(param) {
+                if (param == "show") {
+                    $scope.showval = true;
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+        
+       

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('c.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .form-container, .detail-container {
+            background-color: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1, .detail-container h1 {
+            text-align: center;
+            margin: 0;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-table, .detail-table {
+            width: 100%;
+        }
+
+        .form-table th, .form-table td, .detail-table th, .detail-table td {
+            padding: 4px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+
+        .form-table th, .detail-table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .form-table input[type="date"], .form-table select, .form-table input[type="number"] {
+            width: calc(100% - 12px);
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-table input[type="button"] {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-table input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        .detail-container {
+            margin-top: 10px;
+        }
+
+        .navbar {
+            background-color: #f0f0f0; 
+            padding: 10px; 
+        }
+
+        .navbar a {
+            color: #333; 
+            font-weight: bold; 
+            text-decoration: none; 
+            padding: 5px 10px; 
+            border-radius: 5px; 
+        }
+
+        .navbar a:hover {
+            background-color: #ddd; 
+        }
+
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="myctrl">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <a class="nav-link active" aria-current="page" href="frame3.html">Back</a>
+    </nav>
+    <div class="container">
+        <div class="form-container">
+            <h1>Daily Milk Collection</h1>
+            <table class="form-table">
+                <tr><th>Date</th><td><input type="date" ng-model="record.date" name="date"></td></tr>
+                <tr><th>Time</th><td><select name="time" ng-model="record.time"><option>Morning</option><option>Evening</option></select></td></tr>
+                <tr><th>Customer ID</th><td><input type="number" ng-model="record.no" name="no"></td></tr>
+                <tr><th>Milk Type</th><td><select name="milk" ng-model="record.milk"><option>Cow</option><option>Buffalo</option></select></td></tr>
+                <tr><th>Litre</th><td><input type="number" ng-model="record.ltr" name="ltr"></td></tr>
+                <tr><th>Fat</th><td><input type="number" ng-model="record.fat" name="fat" ng-change="calculateRate()"></td></tr>
+                <tr><th>Rate</th><td><input type="number" ng-model="record.rate" name="rate" readonly></td></tr>
+                <tr><td colspan="2" style="text-align:center;"><input type="button" value="Insert" ng-click="insertRecord()"></td></tr>
+            </table>
+        </div>
+        <div class="detail-container">
+            <h1>Daily Milk Collection Detail</h1>
+            <table class="detail-table">
+                <tr><th>Date</th><th>Time</th><th>Customer ID</th><th>Milk Type</th><th>Litre</th><th>Fat</th><th>Rate</th></tr>
+                <tr ng-repeat="record in records"><td>{{record.date}}</td><td>{{record.time}}</td><td>{{record.no}}</td><td>{{record.milk}}</td><td>{{record.ltr}}</td><td>{{record.fat}}</td><td>{{record.rate}}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myctrl", function ($scope) {
+            $scope.records = [];
+
+            $scope.insertRecord = function () {
+                $scope.records.push({
+                    date: $scope.record.date,
+                    time: $scope.record.time,
+                    no: $scope.record.no,
+                    milk: $scope.record.milk,
+                    ltr: $scope.record.ltr,
+                    fat: $scope.record.fat,
+                    rate: $scope.record.rate
+                });
+
+                $scope.record = {}; // Resetting to empty state to clear input fields
+            };
+
+            $scope.calculateRate = function () {
+                var fat = parseFloat($scope.record.fat);
+                if (fat <= 3.5) {
+                    $scope.record.rate = 35;
+                } else if (fat <= 4.0) {
+                    $scope.record.rate = 45;
+                } else if (fat <= 4.5) {
+                    $scope.record.rate = 55;
+                } else {
+                    $scope.record.rate = 65;
+                }
+            };
+        });
+    </script>
+</body>
+</html>

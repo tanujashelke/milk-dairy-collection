@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            background-image: url('imagec.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            text-transform: uppercase;
+            margin: auto;
+            width: 420px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .center-table {
+            margin: auto;
+        }
+
+        .navbar {
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="myctrl">
+
+    <nav class="navbar">
+        <a class="nav-link active" aria-current="page" href="frame3.html">Back</a>
+    </nav>
+
+    <form>
+        <h1>Add Customer Detail</h1>
+        <table align="center">
+            <tr>
+                <th>Enter id</th>
+                <td><input type="number" ng-model="no" name="no"></td>
+            </tr>
+            <tr>
+                <th>Enter name</th>
+                <td><input type="text" ng-model="name" name="name"></td>
+            </tr>
+            <tr>
+                <th>Enter address</th>
+                <td><input type="text" ng-model="address" name="address"></td>
+            </tr>
+            <tr>
+                <th>Milk Type</th>
+                <td>
+                    <select name="milk" ng-model="milk">
+                        <option>Cow</option>
+                        <option>Buffalo</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="Insert" ng-click="insertRecord()"></td>
+            </tr>
+        </table>
+    </form>
+
+    <div ng-show="showval" class="center-table">
+        <h1>Customer Detail</h1>
+        <table border="1">
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Milk type</th>
+            </tr>
+            <tr ng-repeat="record in records">
+                <td>{{record.no}}</td>
+                <td>{{record.name}}</td>
+                <td>{{record.address}}</td>
+                <td>{{record.milk}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myctrl", function($scope) {
+            $scope.showval = false;
+            $scope.records = [];
+
+            $scope.insertRecord = function() {
+                $scope.records.push({
+                    no: $scope.no,
+                    name: $scope.name,
+                    address: $scope.address,
+                    milk: $scope.milk
+                });
+
+                // Clear input fields
+                $scope.no = '';
+                $scope.name = '';
+                $scope.address = '';
+                $scope.milk = '';
+
+                // Show inserted records
+                $scope.showval = true;
+            }
+        });
+    </script>
+</body>
+
+</html>
